@@ -1293,7 +1293,7 @@ dataKey="value"
 <section className="recommend-section">
 
 <div className="section-heading">
-<h2>AI Tailored Recommendations</h2>
+<h2>Recommendations</h2>
 <p>
 Personalized suggestions generated from your
 symptoms, lifestyle habits and predicted risk.
