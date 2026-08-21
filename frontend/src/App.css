@@ -1,4 +1,8 @@
-* {
+/* ==========================================
+   BASE (YOUR ORIGINAL)
+========================================== */
+
+/* * {
   box-sizing: border-box;
 }
 
@@ -7,17 +11,34 @@ body {
   background: #f8f5fb;
   font-family: Arial, sans-serif;
   color: #2d2438;
-}
+} */
 
+/* ==========================================
+   APP LAYOUT FIX (UPDATED FOR NAVBAR)
+========================================== */
+/* 
 .app {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px;
-}
+  width: 100%;
+  min-height: 100vh;
 
+  /* ❌ removed max-width restriction */
+  /* max-width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+} */ */
+
+/* ==========================================
+   HERO
+========================================== */
+/* 
 .hero {
   text-align: center;
   margin-bottom: 30px;
+  padding: 20px;
 }
 
 .hero h1 {
@@ -31,21 +52,33 @@ body {
   max-width: 750px;
   margin: auto;
   line-height: 1.6;
-}
+} */
 
+/* ==========================================
+   CARD (PREDICTION + RESULT)
+========================================== */
+/* 
 .card {
   background: white;
   padding: 28px;
   border-radius: 18px;
+
   box-shadow: 0 8px 25px rgba(68, 36, 100, 0.08);
-  margin-bottom: 30px;
+
+  margin: 20px auto;
+  width: 100%;
+  max-width: 1100px;
 }
 
 .card h2 {
   color: #5a2d82;
   margin-top: 0;
-}
+} */
 
+/* ==========================================
+   FORM
+========================================== */
+/* 
 .section-subtitle {
   color: #6f6477;
   margin-bottom: 22px;
@@ -61,8 +94,10 @@ input,
 select {
   width: 100%;
   padding: 13px;
+
   border: 1px solid #d7cfe2;
   border-radius: 10px;
+
   font-size: 15px;
 }
 
@@ -73,31 +108,30 @@ label {
 
 label select {
   margin-top: 6px;
-}
+} */
 
-.predict-btn {
-  grid-column: 1 / -1;
-  padding: 15px;
-  background: #6b3fa0;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
+/* ==========================================
+   BUTTONS
+========================================== */
 
-.predict-btn:hover {
-  background: #573080;
-}
 
+/* ==========================================
+   RESULT CARD
+========================================== */
+/* 
 .dashboard-card {
   border-left: 6px solid #6b3fa0;
-}
+} */
 
+/* ==========================================
+   SUMMARY GRID
+========================================== */
+/* 
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
+
   margin: 25px 0;
 }
 
@@ -105,6 +139,7 @@ label select {
   background: #f1e9fb;
   padding: 20px;
   border-radius: 15px;
+
   text-align: center;
 }
 
@@ -116,50 +151,133 @@ label select {
 .summary-box h2 {
   margin: 10px 0 0;
   color: #4c1f75;
-}
+} */
 
-.result-box,
-.symptom-box {
-  background: #faf8fd;
-  padding: 18px;
-  border-radius: 14px;
-  margin-top: 18px;
-}
-
-.risk-text {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.high {
-  color: #c0392b;
-}
-
-.low {
-  color: #1e8449;
-}
-
-.symptom-box ul {
-  padding-left: 20px;
-}
-
-.symptom-box li {
-  margin-bottom: 8px;
-}
-
-.note {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #766b7f;
-}
-
+/* ==========================================
+   🔥 NAVBAR SUPPORT (NEW ADDITION)
+=
+/* ==========================================
+   RESPONSIVE
+========================================== */
+/* 
 @media (max-width: 768px) {
-  .form-grid,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
   .summary-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero h1 {
-    font-size: 28px;
+  .nav-links {
+    display: none; 
+  }
+
+  .card {
+    margin: 10px;
+  }
+} */
+
+/* ==RESULT==
+.result-page {
+  width: 100%;
+}
+
+.full-width-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-radius: 0; /* removes box padding edges */
+/* }
+.card {
+  display: flex;
+  flex-direction: column;
+} */ */
+
+/* pushes button to center alignment
+.predict-btn {
+  align-self: center;
+  margin-top: 20px;
+}
+.result-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.result-header h2 {
+  margin-bottom: 10px;
+}
+
+.risk-text {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.risk-text.high {
+  color: #d10000;
+}
+
+.risk-text.low {
+  color: #1b8f3a;
+} */
+ /* ==========================================
+   GLOBAL RESET
+========================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f8f5fb;
+  font-family: Arial, sans-serif;
+  color: #2d2438;
+}
+
+/* ==========================================
+   APP LAYOUT
+========================================== */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   HERO (Only if still used)
+========================================== */
+
+.hero {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+}
+
+.hero h1 {
+  color: #5a2d82;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #5f536b;
+  max-width: 750px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
   }
 }

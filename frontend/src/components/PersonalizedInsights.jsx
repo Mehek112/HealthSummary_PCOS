@@ -11,7 +11,7 @@ function PersonalizedInsights({ result, history }) {
     const latest = savedData[0] || result.input_data;
     const previous = savedData[1];
 
-    const generatedInsights = [];
+    const generatedInsights = [];s
 
     // Multi-factor PCOS risk pattern
 if (

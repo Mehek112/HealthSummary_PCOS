@@ -1,3 +1,172 @@
+// // import { useEffect, useState } from "react";
+// // import { supabase } from "./supabaseClient";
+
+// // import AuthPage from "./components/AuthPage";
+// // import PredictionForm from "./components/PredictionForm";
+// // import PredictionResult from "./components/PredictionResult";
+// // import AIDashboard from "./components/AIDashboard";
+// // import HealthSummaryPage from "./components/HealthSummaryPage";
+// // import Navbar from "./components/Navbar";
+
+// // import "./App.css";
+
+// // function App() {
+// //   const [user, setUser] = useState(null);
+// //   const [result, setResult] = useState(null);
+// //   const [page, setPage] = useState("predict"); // GLOBAL NAV CONTROL
+
+// //   /* ================= AUTH ================= */
+// //   useEffect(() => {
+// //     supabase.auth.getUser().then(({ data }) => {
+// //       setUser(data.user);
+// //     });
+
+// //     const { data: listener } =
+// //       supabase.auth.onAuthStateChange((_event, session) => {
+// //         setUser(session?.user || null);
+// //       });
+
+// //     return () => listener.subscription.unsubscribe();
+// //   }, []);
+
+// //   /* ================= LOGOUT ================= */
+// //   const handleLogout = async () => {
+// //     await supabase.auth.signOut();
+// //     setUser(null);
+// //     setResult(null);
+// //     setPage("predict");
+// //   };
+
+// //   /* ================= PREDICTION ================= */
+// //   const handleNewPrediction = (predictionResult) => {
+// //     setResult(predictionResult);
+// //     setPage("result");
+// //   };
+
+// //   /* ================= AUTH CHECK ================= */
+// //   if (!user) {
+// //     return <AuthPage setUser={setUser} />;
+// //   }
+
+// //   return (
+// //     <div className="app">
+
+// //       {/* ================= GLOBAL NAVBAR ================= */}
+// //       <Navbar
+// //         onLogout={handleLogout}
+// //         onNavigate={setPage}
+// //         activePage={page}
+// //       />
+
+// //       {/* ================= PAGE SWITCHER ================= */}
+
+// //       {page === "predict" && (
+// //         <PredictionForm
+// //           setResult={handleNewPrediction}
+// //           user={user}
+// //           onLogout={handleLogout}
+// //         />
+// //       )}
+
+// //       {page === "result" && (
+// //         <PredictionResult
+// //           result={result}
+// //           onGoToDashboard={() => setPage("dashboard")}
+// //         />
+// //       )}
+
+// //       {page === "dashboard" && (
+// //         <AIDashboard result={result} user={user} />
+// //       )}
+
+// //       {page === "summary" && (
+// //         <HealthSummaryPage result={result} />
+// //       )}
+
+// //     </div>
+// //   );
+// // }
+
+// // export default App;
+// import { useEffect, useState } from "react";
+// import { supabase } from "./supabaseClient";
+
+// import AuthPage from "./components/AuthPage";
+// import PredictionForm from "./components/PredictionForm";
+// import AIDashboard from "./components/AIDashboard";
+// import HealthSummaryPage from "./components/HealthSummaryPage";
+// import Navbar from "./components/Navbar";
+
+// import "./App.css";
+
+// function App() {
+//   const [user, setUser] = useState(null);
+//   const [result, setResult] = useState(null);
+//   const [page, setPage] = useState("predict");
+
+//   useEffect(() => {
+//     supabase.auth.getUser().then(({ data }) => {
+//       setUser(data.user);
+//     });
+
+//     const { data: listener } =
+//       supabase.auth.onAuthStateChange((_event, session) => {
+//         setUser(session?.user || null);
+//       });
+
+//     return () => listener.subscription.unsubscribe();
+//   }, []);
+
+//   const handleLogout = async () => {
+//     await supabase.auth.signOut();
+//     setUser(null);
+//     setResult(null);
+//     setPage("predict");
+//   };
+
+//   const handleNewPrediction = (predictionResult) => {
+//     setResult(predictionResult);
+//   };
+
+//   if (!user) {
+//     return <AuthPage setUser={setUser} />;
+//   }
+
+//   return (
+//     <div className="app">
+
+//       {/* GLOBAL NAVBAR */}
+//       <Navbar
+//         onLogout={handleLogout}
+//         onNavigate={setPage}
+//         activePage={page}
+//       />
+
+//       {/* PREDICT PAGE */}
+//       {page === "predict" && (
+//         <PredictionForm
+//           setResult={handleNewPrediction}
+//           user={user}
+//           onLogout={handleLogout}
+//           result={result}
+//         />
+//       )}
+
+//       {/* DASHBOARD */}
+//       {page === "dashboard" && (
+//         <AIDashboard result={result} user={user} />
+//       )}
+
+//       {/* SUMMARY */}
+//       {page === "summary" && (
+//         <HealthSummaryPage result={result} />
+//       )}
+
+//     </div>
+//   );
+// }
+
+// export default App;
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 
@@ -5,25 +174,27 @@ import AuthPage from "./components/AuthPage";
 import PredictionForm from "./components/PredictionForm";
 import PredictionResult from "./components/PredictionResult";
 import AIDashboard from "./components/AIDashboard";
-// import BotpressChat from "./components/BotpressChat";
+import HealthSummaryPage from "./components/HealthSummaryPage";
+import Navbar from "./components/Navbar";
 
 import "./App.css";
 
 function App() {
   const [user, setUser] = useState(null);
   const [result, setResult] = useState(null);
-  const [showDashboard, setShowDashboard] = useState(false);
+  const [page, setPage] = useState("predict");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(session?.user || null);
-      }
-    );
+    const { data: listener } =
+      supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setUser(session?.user || null);
+        }
+      );
 
     return () => {
       listener.subscription.unsubscribe();
@@ -34,18 +205,12 @@ function App() {
     await supabase.auth.signOut();
     setUser(null);
     setResult(null);
-    setShowDashboard(false);
+    setPage("predict");
   };
 
   const handleNewPrediction = (predictionResult) => {
     setResult(predictionResult);
-    setShowDashboard(false);
   };
-
-  // 🔥 DEBUG (optional, can remove later)
-  console.log("User:", user);
-  console.log("Result:", result);
-  console.log("ShowDashboard:", showDashboard);
 
   if (!user) {
     return <AuthPage setUser={setUser} />;
@@ -53,135 +218,51 @@ function App() {
 
   return (
     <div className="app">
-      <header className="hero">
-        <h1>PCOS Health Management System</h1>
-        <p>
-          Predict PCOS risk and view your personalized AI-powered health dashboard.
-        </p>
 
-        <button className="predict-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </header>
+      {/* Global Navbar */}
+      <Navbar
+        onLogout={handleLogout}
+        onNavigate={setPage}
+        activePage={page}
+      />
 
-      {/* Prediction Section */}
-      {!showDashboard && (
+      {/* Predict Page */}
+      {page === "predict" && (
         <>
-          <PredictionForm setResult={handleNewPrediction} user={user} />
+          <PredictionForm
+            setResult={handleNewPrediction}
+            user={user}
+            onLogout={handleLogout}
+          />
 
           {result && (
             <PredictionResult
               result={result}
-              onGoToDashboard={() => setShowDashboard(true)}
+              onGoToDashboard={() =>
+                setPage("dashboard")
+              }
             />
           )}
         </>
       )}
 
-      {/* FIXED: Dashboard now does NOT depend on result */}
-      {showDashboard && (
-        <AIDashboard result={result} user={user} />
+      {/* AI Dashboard */}
+      {page === "dashboard" && (
+        <AIDashboard
+          result={result}
+          user={user}
+        />
       )}
+
+      {/* Health Summary */}
+      {page === "summary" && (
+        <HealthSummaryPage
+          result={result}
+        />
+      )}
+
     </div>
   );
 }
 
 export default App;
-
-// import { useEffect, useState } from "react";
-// import { supabase } from "./supabaseClient";
-
-// import AuthPage from "./components/AuthPage";
-// import PredictionForm from "./components/PredictionForm";
-// import PredictionResult from "./components/PredictionResult";
-// import AIDashboard from "./components/AIDashboard";
-// import BotpressChat from "./components/BotpressChat";
-
-// import "./App.css";
-
-// function App() {
-//   const [user, setUser] = useState(null);
-//   const [result, setResult] = useState(null);
-//   const [showDashboard, setShowDashboard] = useState(false);
-
-//   useEffect(() => {
-//     supabase.auth.getUser().then(({ data }) => {
-//       setUser(data.user);
-//     });
-
-//     const { data: listener } = supabase.auth.onAuthStateChange(
-//       (_event, session) => {
-//         setUser(session?.user || null);
-//       }
-//     );
-
-//     return () => {
-//       listener.subscription.unsubscribe();
-//     };
-//   }, []);
-
-//   const handleLogout = async () => {
-//     await supabase.auth.signOut();
-//     setUser(null);
-//     setResult(null);
-//     setShowDashboard(false);
-//   };
-
-//   const handleNewPrediction = (predictionResult) => {
-//     setResult(predictionResult);
-//     setShowDashboard(false);
-//   };
-
-//   // User is not logged in
-//   if (!user) {
-//     return <AuthPage setUser={setUser} />;
-//   }
-
-//   // User is logged in
-//   return (
-//     <div className="app">
-//       {/* Chatbot appears only after login/signup */}
-//       <BotpressChat />
-
-//       <header className="hero">
-//         <h1>PCOS Health Management System</h1>
-//         <p>
-//           Predict PCOS risk and view your personalized AI-powered health
-//           dashboard.
-//         </p>
-
-//         <button className="predict-btn" onClick={handleLogout}>
-//           Logout
-//         </button>
-//       </header>
-
-//       {/* Prediction Section */}
-//       {!showDashboard && (
-//         <>
-//           <PredictionForm
-//             setResult={handleNewPrediction}
-//             user={user}
-//           />
-
-//           {result && (
-//             <PredictionResult
-//               result={result}
-//               onGoToDashboard={() => setShowDashboard(true)}
-//             />
-//           )}
-//         </>
-//       )}
-
-//       {/* Dashboard */}
-//       {showDashboard && (
-//         <AIDashboard
-//           result={result}
-//           user={user}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-

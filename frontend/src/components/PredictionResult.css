@@ -1,0 +1,152 @@
+/* ==========================================
+   RESULT PAGE
+========================================== */
+
+.result-page {
+  width: 100%;
+  padding: 30px 40px;
+  background: #f6f7fb;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   FULL WIDTH RESULT CARD
+========================================== */
+
+.full-width-card {
+  width: 100%;
+
+  /* Removes the width restriction */
+  max-width: none;
+
+  margin: 0;
+
+  background: #ffffff;
+
+  border-radius: 30px;
+  padding: 40px;
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.result-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.result-header h2 {
+  margin: 0 0 15px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #222;
+}
+
+.risk-text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.risk-text.high {
+  color: #d62828;
+}
+
+.risk-text.low {
+  color: #2e7d32;
+}
+
+/* ==========================================
+   SUMMARY GRID
+========================================== */
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 35px 0;
+}
+
+.summary-box {
+  background: #f3ecff;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+}
+
+.summary-box span {
+  display: block;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.summary-box h2 {
+  margin: 0;
+  color: #9b6dff;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+.predict-btn {
+  align-self: center;
+
+  background: #9b6dff;
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  padding: 15px 35px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.predict-btn:hover {
+  background: #8355ef;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width-card {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .result-page {
+    padding: 20px;
+  }
+
+  .full-width-card {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .predict-btn {
+    width: 100%;
+  }
+}

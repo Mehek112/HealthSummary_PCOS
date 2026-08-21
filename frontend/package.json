@@ -13,8 +13,11 @@
     "@botpress/webchat": "^5.3.2",
     "@supabase/supabase-js": "^2.105.0",
     "axios": "^1.15.2",
+    "lucide-react": "^1.22.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^7.18.1",
     "recharts": "^3.8.1"
   },
   "devDependencies": {

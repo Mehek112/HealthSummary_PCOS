@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================
+   NAVBAR MAIN CONTAINER
+   ========================= */
+.navbar {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #efeaf6;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+/* =========================
+   BRAND LOGO
+   ========================= */
+.nav-brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: #9b6dff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* =========================
+   CENTER NAVIGATION LINKS
+   ========================= */
+.nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  height: 100%;
+}
+
+/* STRIP ALL BORDERS & DECORATIONS FROM LINKS */
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none !important; /* Removes underlines */
+  outline: none !important;         /* Removes selection focus boxes */
+  border: none !important;          /* REMOVES BLACK BOX BORDERS Entirely */
+  
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f536b;
+  
+  padding: 8px 16px;
+  border-radius: 12px;
+  white-space: nowrap;
+  background: transparent;
+  height: 40px;
+  transition: all 0.2s ease;
+}
+
+/* HOVER STATE */
+.nav-links a:hover {
+  background: #f5f0ff !important;
+  color: #9b6dff !important;
+  border: none !important;
+}
+
+/* ACTIVE STATE FIX */
+.nav-links a.active-link,
+.active-link {
+  color: #9b6dff !important;
+  font-weight: 600 !important;
+  background: #f5f0ff !important;
+  border: none !important;          /* Prevents bottom lines from clipping */
+  box-shadow: none !important;
+}
+
+/* =========================
+   RIGHT ACTIONS PANEL 
+   ========================= */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* FORCE RESET GLOBAL BUTTON PROPERTIES */
+.profile-btn,
+.logout-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  height: 40px !important;
+  padding: 0 18px !important;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  
+  /* NEUTRALIZERS OVERRIDING BROWSER DEFAULTS */
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* PROFILE ACTION BUTTON */
+.profile-btn {
+  background: #f8f6fa !important;
+  color: #4f4358 !important;
+  border: 1px solid #e2daeb !important; /* Clean light purple border */
+}
+
+.profile-btn:hover {
+  background: #f1ebf7 !important;
+  border-color: #cbbbe3 !important;
+}
+
+/* LOGOUT ACTION BUTTON */
+.logout-btn {
+  background: #9b6dff !important;
+  color: #ffffff !important;
+  border: none !important; /* REMOVES DEFAULT FORM SUBMIT BOX BORDERS */
+  font-weight: 600 !important;
+}
+
+.logout-btn:hover {
+  background: #8452f2 !important;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   SVG ICON ALIGNMENT FIX
+   ========================= */
+.nav-links svg,
+.nav-actions svg {
+  display: block !important;
+  flex-shrink: 0;
+  border: none !important;
+  outline: none !important;
+}
+
+/* =========================
+   RESPONSIVE LAYOUT
+   ========================= */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+}

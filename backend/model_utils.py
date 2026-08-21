@@ -108,8 +108,13 @@ def predict_pcos(data):
 
     row = np.array([[full_input[f] for f in feature_names]])
 
-    probability = pipeline.predict_proba(row)[0][1]
+    probabilities = pipeline.predict_proba(row)[0]
+
+    probability = probabilities[1]
+
     prediction = int(probability >= threshold)
+
+    confidence = max(probabilities) * 100
 
     if probability < 0.30:
         risk_level = "Low Risk"
@@ -133,15 +138,38 @@ def predict_pcos(data):
     if data.pimples.lower() == "yes":
         symptoms.append("Pimples / acne")
 
+    # return {
+    #     "pcos_risk": bool(prediction),
+    #     "risk_score": round(float(probability) * 100, 2),
+    #     "probability": round(float(probability), 4),
+    #     "risk_level": risk_level,
+    #     "bmi": bmi,
+    #     "waist_hip_ratio": waist_hip_ratio,
+    #     "cycle_status": data.cycle_regular,
+    #     "cycle_length": data.cycle_length,
+    #     "symptoms": symptoms,
+    #     "message": "This is a pre-clinic risk assessment, not a medical diagnosis."
+    # }
     return {
-        "pcos_risk": bool(prediction),
-        "risk_score": round(float(probability) * 100, 2),
-        "probability": round(float(probability), 4),
-        "risk_level": risk_level,
-        "bmi": bmi,
-        "waist_hip_ratio": waist_hip_ratio,
-        "cycle_status": data.cycle_regular,
-        "cycle_length": data.cycle_length,
-        "symptoms": symptoms,
-        "message": "This is a pre-clinic risk assessment, not a medical diagnosis."
-    }
+            "pcos_risk": bool(prediction),
+
+            # PCOS probability (risk percentage)
+            "risk_score": round(float(probability) * 100, 2),
+
+            # Model confidence = highest class probability
+            "confidence": round(float(max(probabilities)) * 100, 2),
+
+            "probability": round(float(probability), 4),
+
+            "risk_level": risk_level,
+
+            "bmi": bmi,
+            "waist_hip_ratio": waist_hip_ratio,
+
+            "cycle_status": data.cycle_regular,
+            "cycle_length": data.cycle_length,
+
+            "symptoms": symptoms,
+
+            "message": "This is a pre-clinic risk assessment, not a medical diagnosis."
+        }

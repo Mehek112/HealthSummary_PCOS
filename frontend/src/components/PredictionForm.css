@@ -1,0 +1,293 @@
+
+/* ==========================================
+   1. ROOT SCREEN SETUP (FORCES TOTAL WIDTH)
+   ========================================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden; /* Stops any unwanted side-scrolling glitch */
+}
+
+/* ==========================================
+   2. MAIN CONTAINERS & BREAKOUT LAYOUTS
+   ========================================== */
+.prediction-page {
+  padding: 40px;
+  background: #f6f7fb;
+  min-height: 100vh;
+  
+  /* Advanced CSS Escape Hatch: Forces page to snap to absolute screen edges */
+  width: 100vw !important; 
+  max-width: 100vw !important;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  
+  box-sizing: border-box;
+}
+
+.prediction-grid {
+  display: grid;
+  grid-template-columns: 75% 25%; /* Expanded layout split across the wide screen */
+  gap: 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.prediction-card,
+.sidebar-card {
+  background: white;
+  border-radius: 1cm;
+  padding: 45px; /* Upgraded inside spacing to suit the broad layout */
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   3. TYPOGRAPHY & SECTIONS
+   ========================================== */
+.prediction-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.prediction-subtitle {
+  color: #777;
+  margin-bottom: 35px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  color: #9b6dff;
+}
+
+.section-header h2 {
+  color: #222;
+  font-size: 20px;
+}
+
+/* ==========================================
+   4. FULL-WIDTH GRID INPUT ELEMENTS
+   ========================================== */
+.input-grid,
+.symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Spreads out into 3 clean columns on wide screen */
+  gap: 24px; /* Balanced padding between adjacent fields */
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-group label {
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  color: #222222;
+  font-size: 14px;
+}
+
+input,
+select {
+  padding: 16px;
+  border: none;
+  border-radius: 15px;
+  background: #f8f9fa;
+  font-size: 15px;
+  outline: none;
+  width: 100%; /* Ensures element spans full width of its grid cell */
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+  border: 2px solid #c8a2ff;
+}
+
+/* ==========================================
+   5. BUTTONS & UI INTERACTIVES
+   ========================================== */
+/* ==========================================
+   BUTTON ROW (FORCES SIDE-BY-SIDE ALIGNMENT)
+   ========================================== */
+.button-row {
+  display: flex;
+  flex-direction: row;   /* force horizontal */
+  gap: 15px;
+  margin-top: 40px;
+  align-items: center;   /* vertical alignment */
+  flex-wrap: nowrap;     /* PREVENTS stacking */
+  
+  /* THE FIX: Forces the row to sit below the grid items instead of stretching inside a single cell */
+  grid-column: 1 / -1; 
+  width: 100%;
+}
+
+
+/* COMMON BUTTON STYLE */
+.predict-btn,
+.reset-btn {
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+
+  padding: 0 22px;
+
+  border-radius: 15px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+  white-space: nowrap;
+
+  transition: 0.2s ease;
+}
+
+/* PRIMARY */
+.predict-btn {
+  background: #9b6dff;
+  color: white;
+  border: none;
+}
+
+.predict-btn:hover {
+  background: #7f4fe0;
+}
+
+/* SECONDARY */
+.reset-btn {
+  background: white;
+  color: #9b6dff;
+  border: 2px solid #9b6dff;
+}
+
+.reset-btn:hover {
+  background: #f3ecfb;
+}
+
+/* ==========================================
+   6. SIDEBAR GRAPHICS & COMPONENTS
+   ========================================== */
+.illustration {
+  width: 170px;
+  height: 170px;
+  background: #f3ecff;
+  color: #9b6dff;
+  font-size: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.sidebar-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.sidebar-card p {
+  color: #666;
+  line-height: 1.7;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.badges span {
+  background: #f3ecff;
+  color: #9b6dff;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.privacy-card {
+  background: #faf7ff;
+  border: 1px solid #c8a2ff;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.privacy-card svg {
+  color: #9b6dff;
+  min-width: 25px;
+}
+
+.privacy-card h4 {
+  margin-bottom: 6px;
+}
+
+.privacy-card p {
+  font-size: 14px;
+}
+
+/* ==========================================
+   7. RESPONSIBILITY MEDIA BREAKPOINTS
+   ========================================== */
+@media (max-width: 1200px) {
+  .input-grid,
+  .symptom-grid {
+    grid-template-columns: repeat(2, 1fr); /* Drops back to 2-grid fields on narrow desktop renders */
+  }
+}
+
+@media (max-width: 1000px) {
+  .prediction-grid {
+    grid-template-columns: 1fr; /* Stack columns on tablets */
+  }
+}
+
+@media (max-width: 700px) {
+  .input-grid,
+  .symptom-grid {
+    grid-template-columns: 1fr; /* Single column layout logic for phones */
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .prediction-page {
+    padding: 20px;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    left: 0 !important;
+  }
+
+  .prediction-title {
+    font-size: 30px;
+  }
+} 

@@ -1,8 +1,23 @@
+
 import { useState } from "react";
 import { predictPCOS } from "../api/pcosApi";
 import { saveTrackerEntry } from "../api/trackerApi";
+import { RotateCcw } from "lucide-react";
 
-function PredictionForm({ setResult, user }) {
+import {
+  User,
+  Activity,
+  HeartPulse,
+  Dumbbell,
+  Shield,
+  Zap,
+  CircleHelp,
+} from "lucide-react";
+
+import { FaFemale } from "react-icons/fa";
+import "./PredictionForm.css";
+
+function PredictionForm({setResult,user,onLogout,result}) {
   const [formData, setFormData] = useState({
     age: "",
     weight: "",
@@ -29,6 +44,25 @@ function PredictionForm({ setResult, user }) {
     });
   };
 
+  const handleReset = () => {
+    setFormData({
+      age: "",
+      weight: "",
+      height: "",
+      waist: "",
+      hip: "",
+      cycle_regular: "Regular",
+      cycle_length: "",
+      weight_gain: "No",
+      hair_growth: "No",
+      skin_darkening: "No",
+      hair_loss: "No",
+      pimples: "No",
+      regular_exercise: "Yes",
+      fast_food: "No",
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -52,39 +86,18 @@ function PredictionForm({ setResult, user }) {
         tracked_at: new Date().toLocaleString(),
       };
 
-      // 🔥 IMPORTANT FIX: ensure user exists
       if (!user || !user.id) {
-        alert("User not logged in properly. Please login again.");
-        console.error("User missing:", user);
-        setResult(fullResult); // still show result
+        alert("User not logged in properly.");
+        setResult(fullResult);
         setLoading(false);
         return;
       }
 
-      // Save to Supabase
       await saveTrackerEntry({
         user_id: user.id,
-
-        age: finalData.age,
-        weight: finalData.weight,
-        height: finalData.height,
-        waist: finalData.waist,
-        hip: finalData.hip,
-
-        cycle_regular: finalData.cycle_regular,
-        cycle_length: finalData.cycle_length,
-
-        weight_gain: finalData.weight_gain,
-        hair_growth: finalData.hair_growth,
-        skin_darkening: finalData.skin_darkening,
-        hair_loss: finalData.hair_loss,
-        pimples: finalData.pimples,
-        regular_exercise: finalData.regular_exercise,
-        fast_food: finalData.fast_food,
-
+        ...finalData,
         bmi: prediction.bmi,
         waist_hip_ratio: prediction.waist_hip_ratio,
-
         pcos_risk: prediction.pcos_risk,
         risk_score: prediction.risk_score,
         probability: prediction.probability,
@@ -93,7 +106,7 @@ function PredictionForm({ setResult, user }) {
 
       setResult(fullResult);
     } catch (error) {
-      alert("Prediction failed. Please check backend connection.");
+      alert("Prediction failed.");
       console.error(error);
     }
 
@@ -101,169 +114,297 @@ function PredictionForm({ setResult, user }) {
   };
 
   return (
-    <div className="card">
-      <h2>PCOS Risk Prediction</h2>
-      <p className="section-subtitle">
-        Enter your basic health and symptom details to predict PCOS risk.
-      </p>
+  <div className="prediction-page">
+   
 
-      <form onSubmit={handleSubmit} className="form-grid">
-        <input
-          type="number"
-          name="age"
-          placeholder="Age"
-          value={formData.age}
-          onChange={handleChange}
-          required
-        />
+    <div className="prediction-grid">
 
-        <input
-          type="number"
-          name="weight"
-          placeholder="Weight (kg)"
-          value={formData.weight}
-          onChange={handleChange}
-          required
-        />
+      {/* LEFT PANEL */}
+      <div className="prediction-card">
+        <h1 className="prediction-title">
+          PCOS Risk Assessment
+        </h1>
 
-        <input
-          type="number"
-          name="height"
-          placeholder="Height (cm)"
-          value={formData.height}
-          onChange={handleChange}
-          required
-        />
+        <p className="prediction-subtitle">
+          Fill in your health details to receive an
+          AI-powered prediction.
+        </p>
 
-        <input
-          type="number"
-          name="waist"
-          placeholder="Waist (inch)"
-          value={formData.waist}
-          onChange={handleChange}
-          required
-        />
+        <form onSubmit={handleSubmit}>
 
-        <input
-          type="number"
-          name="hip"
-          placeholder="Hip (inch)"
-          value={formData.hip}
-          onChange={handleChange}
-          required
-        />
+          {/* Profile */}
+          <div className="section-header">
+            <User size={20} />
+            <h2>Profile & Measurements</h2>
+          </div>
 
-        <input
-          type="number"
-          name="cycle_length"
-          placeholder="Cycle length (days)"
-          value={formData.cycle_length}
-          onChange={handleChange}
-          required
-        />
+          <div className="input-grid">
 
-        <label>
-          Cycle Regularity
-          <select
-            name="cycle_regular"
-            value={formData.cycle_regular}
-            onChange={handleChange}
-          >
-            <option>Regular</option>
-            <option>Irregular</option>
-          </select>
-        </label>
+            <div className="field-group">
+              <label>Age</label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>
-          Weight Gain
-          <select
-            name="weight_gain"
-            value={formData.weight_gain}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+            <div className="field-group">
+              <label>Weight (kg)</label>
+              <input
+                type="number"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>
-          Excess Hair Growth
-          <select
-            name="hair_growth"
-            value={formData.hair_growth}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+            <div className="field-group">
+              <label>Height (cm)</label>
+              <input
+                type="number"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>
-          Skin Darkening
-          <select
-            name="skin_darkening"
-            value={formData.skin_darkening}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+            <div className="field-group">
+              <label>Waist (inch)</label>
+              <input
+                type="number"
+                name="waist"
+                value={formData.waist}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>
-          Hair Loss
-          <select
-            name="hair_loss"
-            value={formData.hair_loss}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+            <div className="field-group">
+              <label>Hip (inch)</label>
+              <input
+                type="number"
+                name="hip"
+                value={formData.hip}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-        <label>
-          Pimples / Acne
-          <select
-            name="pimples"
-            value={formData.pimples}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+          </div>
 
-        <label>
-          Regular Exercise
-          <select
-            name="regular_exercise"
-            value={formData.regular_exercise}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+          {/* Menstrual */}
 
-        <label>
-          Fast Food Habit
-          <select
-            name="fast_food"
-            value={formData.fast_food}
-            onChange={handleChange}
-          >
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-        </label>
+          <div className="section-header">
+            <Activity size={20} />
+            <h2>Menstrual History</h2>
+          </div>
 
-        <button type="submit" className="predict-btn">
-          {loading ? "Predicting..." : "Predict PCOS Risk"}
-        </button>
-      </form>
+          <div className="input-grid">
+
+            <div className="field-group">
+              <label>Cycle Regularity</label>
+              <select
+                name="cycle_regular"
+                value={formData.cycle_regular}
+                onChange={handleChange}
+              >
+                <option>Regular</option>
+                <option>Irregular</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Cycle Length (days)</label>
+              <input
+                type="number"
+                name="cycle_length"
+                value={formData.cycle_length}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+          </div>
+
+          {/* Symptoms */}
+
+          <div className="section-header">
+            <HeartPulse size={20} />
+            <h2>Clinical Signs & Symptoms</h2>
+          </div>
+
+          <div className="symptom-grid">
+
+            <div className="field-group">
+              <label>Weight Gain</label>
+              <select
+                name="weight_gain"
+                value={formData.weight_gain}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Hair Growth</label>
+              <select
+                name="hair_growth"
+                value={formData.hair_growth}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Skin Darkening</label>
+              <select
+                name="skin_darkening"
+                value={formData.skin_darkening}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Hair Loss</label>
+              <select
+                name="hair_loss"
+                value={formData.hair_loss}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Pimples</label>
+              <select
+                name="pimples"
+                value={formData.pimples}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+          </div>
+
+          {/* Lifestyle */}
+
+          <div className="section-header">
+            <Dumbbell size={20} />
+            <h2>Lifestyle Habits</h2>
+          </div>
+
+          <div className="input-grid">
+
+            <div className="field-group">
+              <label>Regular Exercise</label>
+              <select
+                name="regular_exercise"
+                value={formData.regular_exercise}
+                onChange={handleChange}
+              >
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
+            <div className="field-group">
+              <label>Fast Food</label>
+              <select
+                name="fast_food"
+                value={formData.fast_food}
+                onChange={handleChange}
+              >
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div className="button-row">
+            <button
+              className="predict-btn"
+              type="submit"
+            >
+              <Zap size={18} />
+              {loading
+                ? "Predicting..."
+                : "Predict PCOS"}
+            </button>
+            <button
+              type="button"
+              className="reset-btn"
+              onClick={handleReset}
+            >
+              
+              Reset
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      {/* RIGHT PANEL */}
+
+      <div className="sidebar-card">
+        <div className="illustration">
+          <FaFemale />
+        </div>
+
+        <h3>
+          <CircleHelp size={20} />
+          Why we ask this?
+        </h3>
+
+        <p>
+          We review your metabolic, lifestyle,
+          and habit statistics to generate
+          immediate health trends and estimate
+          your PCOS risk.
+        </p>
+
+        <div className="badges">
+         
+          <span>AI-Driven Analysis</span>
+        </div>
+
+        <div className="privacy-card">
+          <Shield />
+
+          <div>
+            <h4>
+              Your data is private and secure.
+            </h4>
+
+            <p>
+              Information remains confidential
+              and is only used to generate your
+              assessment.
+            </p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  );
+  </div>
+);
+
 }
 
 export default PredictionForm;
