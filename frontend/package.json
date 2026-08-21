@@ -13,6 +13,7 @@
     "@botpress/webchat": "^5.3.2",
     "@supabase/supabase-js": "^2.105.0",
     "axios": "^1.15.2",
+    "jspdf": "^4.2.1",
     "lucide-react": "^1.22.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
